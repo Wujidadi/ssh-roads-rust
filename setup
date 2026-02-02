@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+echo "正在編譯並安裝 ssh-roads..."
+cargo install --path .
+
+echo "正在建立指令連結..."
+sudo ln -sf "$(which ssh-roads)" /usr/local/bin/roads
+
+echo "正在配置文件夾 ~/.ssh-roads..."
+mkdir -p ~/.ssh-roads
+
+# 使用 -f 確保重複執行時可以覆蓋舊的連結
+ln -sf "$PWD/servers.json" ~/.ssh-roads/servers.json
+ln -sf "$PWD/.env" ~/.ssh-roads/.env
+
+echo "✅ 安裝完成！現在您可以在任何地方直接輸入 'ssh-roads' 或 'roads' 執行。"

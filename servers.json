@@ -1,0 +1,277 @@
+{
+  "servers": [
+    {
+      "key": "A",
+      "name": "樹莓派 4B (4G) 網關 (Ethernet)",
+      "ip": "$PI_4B_4G_GATEWAY_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "a",
+      "name": "樹莓派 4B (4G) 網關 (Ethernet)",
+      "ip": "$HOME_IP",
+      "port": "$PI_4B_4G_GATEWAY_PORT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": ""
+    },
+    {
+      "key": "B",
+      "name": "樹莓派 4B (4G) 網關 (Wi-Fi)",
+      "ip": "$PI_4B_4G_GATEWAY_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "C",
+      "name": "樹莓派 3B (Ethernet)",
+      "ip": "$PI_3B_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "D",
+      "name": "樹莓派 3B (Wi-Fi)",
+      "ip": "$PI_3B_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "E",
+      "name": "樹莓派 4B (8G) 主伺服器 (Ethernet)",
+      "ip": "$PI_4B_8G_SERVER_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "e",
+      "name": "樹莓派 4B (8G) 主伺服器 (Ethernet)",
+      "ip": "$HOME_IP",
+      "port": "$PI_4B_8G_SERVER_PORT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": ""
+    },
+    {
+      "key": "F",
+      "name": "樹莓派 4B (8G) 主伺服器 (Wi-Fi)",
+      "ip": "$PI_4B_8G_SERVER_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "G",
+      "name": "樹莓派 4B (8G) 測試機 No.1 (Ethernet)",
+      "ip": "$PI_4B_8G_TEST_1_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "g",
+      "name": "樹莓派 4B (8G) 測試機 No.1 (Ethernet)",
+      "ip": "$HOME_IP",
+      "port": "$PI_4B_8G_TEST_1_PORT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": ""
+    },
+    {
+      "key": "H",
+      "name": "樹莓派 4B (8G) 測試機 No.1 (Wi-Fi)",
+      "ip": "$PI_4B_8G_TEST_1_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_USER",
+      "pswd": "$HOME_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "I",
+      "name": "樹莓派 4B (8G) LIBMS, CPCF 正式機 (Ethernet)",
+      "ip": "$PI_4B_8G_CPCF_LIBMS_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$CPCF_USER",
+      "pswd": "$CPCF_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "i",
+      "name": "樹莓派 4B (8G) LIBMS, CPCF 正式機 (Ethernet)",
+      "ip": "$PI_4B_8G_CPCF_LIBMS_CPCF_LAN_ENET_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$CPCF_USER",
+      "pswd": "$CPCF_PSWD",
+      "comment": "毛毛蟲區網"
+    },
+    {
+      "key": "J",
+      "name": "樹莓派 4B (8G) LIBMS, CPCF 正式機 (Wi-Fi)",
+      "ip": "$PI_4B_8G_CPCF_LIBMS_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$CPCF_USER",
+      "pswd": "$CPCF_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "j",
+      "name": "樹莓派 4B (8G) LIBMS, CPCF 正式機 (Wi-Fi)",
+      "ip": "$PI_4B_8G_CPCF_LIBMS_CPCF_LAN_WIFI_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$CPCF_USER",
+      "pswd": "$CPCF_PSWD",
+      "comment": "毛毛蟲區網"
+    },
+    {
+      "key": "W",
+      "name": "Windows 10 主機",
+      "ip": "$HOME_WIN_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$HOME_WIN_USER",
+      "pswd": "$HOME_WIN_PSWD",
+      "comment": "個人區網"
+    },
+    {
+      "key": "X",
+      "name": "$GCP_SERVER_NAME",
+      "ip": "$GCP_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "gcp",
+      "user": "$GCP_USER",
+      "pswd": "",
+      "gcp_project": "$GCP_PROJECT",
+      "gcp_zone": "$GCP_ZONE",
+      "gcp_vm_name": "$GCP_VM_NAME",
+      "comment": "個人區網"
+    },
+    {
+      "key": "OPPS",
+      "name": "HH 上版機 (hh-rd)",
+      "ip": "$OP_PUSH_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_PUSH_USER",
+      "pswd": "$HH_AD_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPGR",
+      "name": "HH GitLab Runner 伺服器",
+      "ip": "$OP_GITLAB_RUNNER_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_GITLAB_RUNNER_USER",
+      "pswd": "$OP_GITLAB_RUNNER_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPPP",
+      "name": "OP Paymentpool 伺服器 (root)",
+      "ip": "$OP_POOL_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_POOL_DEV_USER",
+      "pswd": "$OP_POOL_DEV_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPpp",
+      "name": "OP Paymentpool 伺服器 (taras)",
+      "ip": "$OP_POOL_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "taras",
+      "pswd": "$OP_POOL_DEV_TARAS_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPPR",
+      "name": "OP Paymentpool Rocky Linux 伺服器 (root)",
+      "ip": "$OP_POOL_DEV_ROCKY_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_POOL_DEV_ROCKY_USER",
+      "pswd": "$OP_POOL_DEV_ROCKY_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPFL",
+      "name": "OP Payment Flow 伺服器 (root)",
+      "ip": "$OP_FLOW_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_FLOW_DEV_USER",
+      "pswd": "$OP_FLOW_DEV_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPfl",
+      "name": "OP Payment Flow 伺服器 (taras)",
+      "ip": "$OP_FLOW_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "taras",
+      "pswd": "$OP_FLOW_DEV_TARAS_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPCK",
+      "name": "OP Crypto Keychain 伺服器",
+      "ip": "$OP_KEYCHAIN_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_KEYCHAIN_DEV_USER",
+      "pswd": "$OP_KEYCHAIN_DEV_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPOA",
+      "name": "OP OA Support 伺服器 (root)",
+      "ip": "$OP_OA_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "$OP_OA_DEV_USER",
+      "pswd": "$OP_OA_DEV_PSWD",
+      "comment": "HH VPN"
+    },
+    {
+      "key": "OPoa",
+      "name": "OP OA Support 伺服器 (gitlab)",
+      "ip": "$OP_OA_DEV_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "password",
+      "user": "gitlab",
+      "pswd": "$OP_OA_DEV_GITLAB_PSWD",
+      "comment": "HH VPN"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.iml
+
+# Rust
+Cargo.lock
+*.rlib
+/target
+
+# Environment
+.env
+.env.local
