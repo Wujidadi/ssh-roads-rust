@@ -62,18 +62,18 @@ impl Config {
 
     // Helper method to get the resource path
     pub fn get_resource_path(filename: &str) -> PathBuf {
-        // Try the current working directory (for development)
-        let local = PathBuf::from(filename);
-        if local.exists() {
-            return local;
-        }
-
-        // Try the user's home directory .ssh-roads folder (for global installation)
+        // Try the user's home directory .ssh-roads folder (Primary for global installation)
         if let Ok(home) = env::var("HOME") {
             let global = Path::new(&home).join(".ssh-roads").join(filename);
             if global.exists() {
                 return global;
             }
+        }
+
+        // Try the current working directory (Secondary, for development)
+        let local = PathBuf::from(filename);
+        if local.exists() {
+            return local;
         }
 
         local // Return the local path if not found, to allow later error reporting

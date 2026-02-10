@@ -22,8 +22,6 @@ fn main() {
     let env_path = Config::get_resource_path(".env");
     if env_path.exists() {
         dotenv::from_path(env_path).ok();
-    } else {
-        dotenv::dotenv().ok();
     }
 
     let args = Args::parse();

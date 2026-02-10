@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-echo "正在編譯並安裝 ssh-roads..."
+echo "Compiling and installing ssh-roads ..."
 cargo install --path .
 
-echo "正在建立指令連結..."
+echo "Creating command links ..."
 sudo ln -sf "$(which ssh-roads)" /usr/local/bin/roads
 
-echo "正在配置文件夾 ~/.ssh-roads..."
+echo "Configuring ~/.ssh-roads ..."
 mkdir -p ~/.ssh-roads
 
-# 使用 -f 確保重複執行時可以覆蓋舊的連結
+# Use -f to ensure that the old links could be overwritten if this script be run multiple times.
 ln -sf "$PWD/servers.json" ~/.ssh-roads/servers.json
 ln -sf "$PWD/.env" ~/.ssh-roads/.env
 
-echo "✅ 安裝完成！現在您可以在任何地方直接輸入 'ssh-roads' 或 'roads' 執行。"
+echo "✅ Installation complete! You can now run 'ssh-roads' or 'roads' from anywhere."
