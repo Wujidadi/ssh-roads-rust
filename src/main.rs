@@ -2,9 +2,9 @@ use clap::Parser;
 use colored::*;
 use std::process;
 
+mod cli;
 mod config;
 mod server;
-mod cli;
 
 use config::Config;
 use server::ServerManager;
@@ -18,9 +18,8 @@ struct Args {
 }
 
 fn main() {
-    // Load environment variables
-    let env_path = Config::get_resource_path(".env");
-    if env_path.exists() {
+    // Load environment variables - only from project directories
+    if let Some(env_path) = Config::get_env_path() {
         dotenv::from_path(env_path).ok();
     }
 

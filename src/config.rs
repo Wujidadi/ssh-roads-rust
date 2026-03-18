@@ -1,8 +1,10 @@
 use serde::{Deserialize, Serialize};
-use std::fs;
-use std::error::Error;
-use std::env;
-use std::path::{Path, PathBuf};
+use std::{
+    env,
+    error::Error,
+    fs,
+    path::{Path, PathBuf},
+};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ServerConfig {
@@ -53,16 +55,15 @@ pub struct Config {
 impl Config {
     pub fn load() -> Result<Self, Box<dyn Error>> {
         let path = Self::get_resource_path("servers.json");
-        let content = fs::read_to_string(&path).map_err(|e| {
-            format!("Failed to read config file {:?}: {}", path, e)
-        })?;
+        let content = fs::read_to_string(&path)
+            .map_err(|e| format!("Failed to read config file {:?}: {}", path, e))?;
         let config: Config = serde_json::from_str(&content)?;
         Ok(config)
     }
 
     // Helper method to get the resource path
     pub fn get_resource_path(filename: &str) -> PathBuf {
-        // Try the user's home directory .ssh-roads folder (Primary for global installation)
+        // Try the user's home directory .ssh-roads folder (for global installation)
         if let Ok(home) = env::var("HOME") {
             let global = Path::new(&home).join(".ssh-roads").join(filename);
             if global.exists() {
@@ -70,12 +71,36 @@ impl Config {
             }
         }
 
-        // Try the current working directory (Secondary, for development)
+        // Try the current working directory (for development)
         let local = PathBuf::from(filename);
         if local.exists() {
             return local;
         }
 
         local // Return the local path if not found, to allow later error reporting
+    }
+
+    // Helper method to get the env file path - only from project directories
+    pub fn get_env_path() -> Option<PathBuf> {
+        // Only look in the user's home directory .ssh-roads folder
+        if let Ok(home) = env::var("HOME") {
+            let global = Path::new(&home).join(".ssh-roads").join(".env");
+            if global.exists() {
+                return Some(global);
+            }
+        }
+
+        // Only look in the current working directory if it's explicitly the .ssh-roads folder
+        let current_dir = env::current_dir().ok()?;
+        if let Some(dir_name) = current_dir.file_name() {
+            if dir_name == ".ssh-roads" {
+                let local = current_dir.join(".env");
+                if local.exists() {
+                    return Some(local);
+                }
+            }
+        }
+
+        None
     }
 }

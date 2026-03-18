@@ -1,7 +1,6 @@
 use crate::config::{Config, ServerConfig};
 use colored::*;
-use std::error::Error;
-use std::process::Command;
+use std::{error::Error, process::Command};
 use unicode_width::UnicodeWidthStr;
 
 pub struct ServerManager {
@@ -31,7 +30,11 @@ impl ServerManager {
             let port_num = server.resolved_port();
 
             // Address, IP + Port, width as 21 characters
-            let address = if port_num == 22 { real_ip } else { format!("{}:{}", real_ip, port_num) };
+            let address = if port_num == 22 {
+                real_ip
+            } else {
+                format!("{}:{}", real_ip, port_num)
+            };
             let addr_col = self.pad_str(&address, 21);
 
             // Automatically add parentheses around the comment
@@ -148,9 +151,19 @@ impl ServerManager {
                     .arg(port.to_string())
                     .arg("-o")
                     .arg("StrictHostKeyChecking=no")
-                    .arg(format!("{}@{}", server.resolve(&server.user), server.resolve(&server.ip)))
+                    .arg(format!(
+                        "{}@{}",
+                        server.resolve(&server.user),
+                        server.resolve(&server.ip)
+                    ))
                     .status()
-                    .map(|s| if s.success() { Ok(()) } else { Err("SSH failed".into()) })?
+                    .map(|s| {
+                        if s.success() {
+                            Ok(())
+                        } else {
+                            Err("SSH failed".into())
+                        }
+                    })?
             }
             Err(e) => Err(e.into()),
         }
@@ -166,8 +179,10 @@ impl ServerManager {
         let status = Command::new("gcloud")
             .arg("compute")
             .arg("ssh")
-            .arg("--project").arg(project)
-            .arg("--zone").arg(zone)
+            .arg("--project")
+            .arg(project)
+            .arg("--zone")
+            .arg(zone)
             .arg(format!("{}@{}", server.resolve(&server.user), vm))
             .status()?;
 
