@@ -8,13 +8,16 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
-*.swp
 *.iml
 
 # Rust
 Cargo.lock
 *.rlib
 /target
+
+# SonarQube
+sonar-project.properties
+.scannerwork/
 
 # Environment
 .env
