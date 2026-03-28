@@ -95,6 +95,7 @@ impl ServerManager {
 
                 match server.conn_type.as_str() {
                     "password" => self.connect_password(server)?,
+                    "key" => self.connect_key(server)?,
                     "gcp" => self.connect_gcp(server)?,
                     _ => return Err("Unknown connection type".into()),
                 }
@@ -166,6 +167,38 @@ impl ServerManager {
                     })?
             }
             Err(e) => Err(e.into()),
+        }
+    }
+
+    /// Connect to a server using SSH key authentication
+    fn connect_key(&self, server: &ServerConfig) -> Result<(), Box<dyn Error>> {
+        let port = server.resolved_port();
+        let ssh_key = server
+            .ssh_key
+            .as_deref()
+            .ok_or_else(|| format!("Missing SSH key path for server: {}", server.key))?;
+        let ssh_key = server.resolve(ssh_key);
+
+        let status = Command::new("ssh")
+            .arg("-i")
+            .arg(&ssh_key)
+            .arg("-p")
+            .arg(port.to_string())
+            .arg("-o")
+            .arg("IdentitiesOnly=yes")
+            .arg("-o")
+            .arg("StrictHostKeyChecking=no")
+            .arg(format!(
+                "{}@{}",
+                server.resolve(&server.user),
+                server.resolve(&server.ip)
+            ))
+            .status()?;
+
+        if status.success() {
+            Ok(())
+        } else {
+            Err("SSH key connection failed".into())
         }
     }
 

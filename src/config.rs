@@ -20,6 +20,8 @@ pub struct ServerConfig {
     #[serde(default)]
     pub pswd: Option<String>,
     #[serde(default)]
+    pub ssh_key: Option<String>,
+    #[serde(default)]
     pub gcp_project: Option<String>,
     #[serde(default)]
     pub gcp_zone: Option<String>,

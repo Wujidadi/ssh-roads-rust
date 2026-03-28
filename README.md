@@ -5,6 +5,7 @@
 ## 🌟 Features
 
 - **Automated Login**: Integrated `expect` engine supports automatic password entry, eliminating the need for manual copy-pasting. It automatically falls back to a standard SSH connection if `expect` is not available in the environment.
+- **SSH Key Login**: Supports private-key authentication for servers that should not use password-based login.
 - **GCP Integration**: Native support for Google Cloud Platform (GCP) instance connections, simplifying `gcloud compute ssh` commands.
 - **Perfect Layout Alignment**: Developed specifically for terminal displays, it supports Unicode width calculation to ensure perfect alignment even when server names contain full-width characters (e.g., Chinese characters).
 - **Vibrant Colors**: Uses colors to distinguish keys, server names, IP addresses, and comments for a better visual experience.
@@ -64,6 +65,16 @@ The fields have been significantly simplified; only mandatory fields need to be 
       "comment": "Remark text"
     },
     {
+      "key": "PS",
+      "name": "Key-based Host",
+      "ip": "$HOST_IP",
+      "port": "$SSH_PORT_DEFAULT",
+      "conn_type": "key",
+      "user": "$PS_USER",
+      "ssh_key": "$PS_SSH_KEY",
+      "comment": "Key auth host"
+    },
+    {
       "key": "GCP",
       "name": "GCP Host",
       "ip": "$GCP_IP",
@@ -82,6 +93,7 @@ The fields have been significantly simplified; only mandatory fields need to be 
 - **Flexible Fields**:
   - For non-GCP servers, `gcp_` related fields can be omitted directly.
   - For GCP servers, `pswd` can be omitted, and the system will invoke `gcloud` for authentication.
+  - For `key` servers, `ssh_key` should point to the private key file.
   - If `port` is `22` or not provided, the menu display will be simplified.
 
 ## 💡 Usage

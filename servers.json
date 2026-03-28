@@ -178,9 +178,9 @@
       "name": "HH 上版機 (hh-rd)",
       "ip": "$OP_PUSH_IP",
       "port": "$SSH_PORT_DEFAULT",
-      "conn_type": "password",
+      "conn_type": "key",
       "user": "$OP_PUSH_USER",
-      "pswd": "$HH_AD_PSWD",
+      "ssh_key": "$OP_PUSH_SSH_KEY",
       "comment": "HH VPN"
     },
     {
