@@ -81,9 +81,9 @@ The fields have been significantly simplified; only mandatory fields need to be 
       "conn_type": "gcp",
       "user": "ubuntu",
       "gcp_project": "$GCP_PROJECT",
-      "gcp_zone": "asia-east1-c",
-      "gcp_vm_name": "instance-1",
-      "comment": "Cloud host"
+      "gcp_zone": "$GCP_ZONE",
+      "gcp_vm_name": "instance-YYYYMMDD-hhmmss",
+      "comment": "GCP"
     }
   ]
 }
