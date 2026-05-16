@@ -171,7 +171,7 @@
       "gcp_project": "$GCP_PROJECT",
       "gcp_zone": "$GCP_ZONE",
       "gcp_vm_name": "$GCP_VM_NAME",
-      "comment": "個人區網"
+      "comment": ""
     },
     {
       "key": "OPPS",

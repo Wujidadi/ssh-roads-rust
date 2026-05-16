@@ -23,7 +23,8 @@ impl ServerManager {
             let key_col = self.pad_str(&server.key, 6);
 
             // Name, full-width character handling, width as 46 characters
-            let name_col = self.pad_str(&server.name, 46);
+            let real_name = server.resolve(&server.name);
+            let name_col = self.pad_str(&real_name, 46);
 
             // Resolve IP and port
             let real_ip = server.resolve(&server.ip);
