@@ -5,62 +5,62 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Run
 
 ```bash
-# 開發建置
+# Development build
 cargo build
 
-# 正式發布建置
+# Release build
 cargo build --release
 
-# 安裝到 ~/.cargo/bin
+# Install to ~/.cargo/bin
 cargo install --path .
 
-# 直接執行（開發中）
+# Run directly (during development)
 cargo run
 cargo run -- <SERVER_KEY>
 ```
 
 ## Architecture
 
-程式入口為 `main.rs`，流程如下：
+Entry point is `main.rs`, with the following startup flow:
 
-1. `Config::get_env_path()` 定位 `.env` 檔案（先找 `~/.ssh-roads/.env`，再判斷當前目錄是否為 `.ssh-roads/`）並載入環境變數
-2. `Config::load()` 讀取 `servers.json`（先找 `~/.ssh-roads/servers.json`，再找當前目錄）
-3. `ServerManager::show_menu()` 顯示對齊排版的伺服器列表
-4. 透過命令列引數或 stdin 取得使用者輸入的 server key
-5. `ServerManager::connect_server()` 依 `conn_type` 分派至對應連線方法
+1. `Config::get_env_path()` locates the `.env` file (checks `~/.ssh-roads/.env` first, then the local path if cwd is `.ssh-roads/`) and loads environment variables
+2. `Config::load()` reads `servers.json` (checks `~/.ssh-roads/servers.json` first, then cwd)
+3. `ServerManager::show_menu()` displays the aligned server list
+4. Server key is obtained from CLI arguments or stdin
+5. `ServerManager::connect_server()` dispatches to the corresponding connection method based on `conn_type`
 
-### 模組職責
+### Module Responsibilities
 
-| 模組        | 職責                                                                                                  |
-| ----------- | ----------------------------------------------------------------------------------------------------- |
-| `config.rs` | `ServerConfig`（單一伺服器設定）與 `Config`（伺服器列表），含 `$VAR` 環境變數解析邏輯及設定檔路徑查找 |
-| `server.rs` | `ServerManager`：選單顯示（Unicode 全形字元寬度對齊）與三種連線實作                                   |
-| `cli.rs`    | stdin 讀取輸入                                                                                        |
-| `main.rs`   | 組合上述流程，使用 Clap 解析可選的 `route` 引數                                                       |
+| Module      | Responsibility                                                                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `config.rs` | `ServerConfig` (single server config) and `Config` (server list), including `$VAR` environment variable resolution and config file path lookup |
+| `server.rs` | `ServerManager`: menu display (Unicode full-width character alignment) and three connection implementations                                    |
+| `cli.rs`    | Reads input from stdin                                                                                                                         |
+| `main.rs`   | Composes the above flow; uses Clap to parse the optional `route` argument                                                                      |
 
-### 連線類型
+### Connection Types
 
-- `password`：使用系統 `expect` 指令自動填入密碼；若 `expect` 不存在則回退到互動式 `ssh`
-- `key`：`ssh -i <ssh_key>` 私鑰認證，使用 `IdentitiesOnly=yes`
-- `gcp`：調用 `gcloud compute ssh`
+- `password`: Uses the system `expect` command to fill in the password automatically; falls back to interactive `ssh` if `expect` is not available
+- `key`: `ssh -i <ssh_key>` private key authentication with `IdentitiesOnly=yes`
+- `gcp`: Invokes `gcloud compute ssh`
 
-### 設定檔格式
+### Config File Format
 
-`servers.json` 中所有字串欄位均支援 `$VAR_NAME` 格式，程式會從已載入的環境變數中自動替換。`port` 欄位若為 `22`
-或省略則選單不顯示埠號。GCP 類型可省略 `pswd`；`key` 類型需提供 `ssh_key` 路徑；非 GCP 伺服器可省略所有 `gcp_` 欄位。
+All string fields in `servers.json` support the `$VAR_NAME` format and are automatically substituted from loaded environment variables.
+The `port` field is hidden in the menu when it is `22` or omitted.
+GCP type can omit `pswd`; `key` type requires an `ssh_key` path; non-GCP servers can omit all `gcp_*` fields.
 
-## Git Commit 規範
+## Git Commit Guidelines
 
-詳見 `.github/git-commit-instructions.md`，摘要如下：
+See `.github/git-commit-instructions.md` for details. Summary:
 
-- Commit message 一律使用繁體中文（台灣），不夾雜日韓語或其他非中文詞彙
-- 使用 [Conventional Commits](https://www.conventionalcommits.org/zh-hant/) 標準格式
-- 變動較多或複雜時，標題之外須列出至少一項 bullet point，說明各檔案的異動原因
-- Commit message 最後**不加** Co-Authored-By 署名
+- Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format
+- For large or complex changes, include at least one bullet point below the subject line describing the reason for each file changed
+- Do **not** add a `Co-Authored-By` trailer
 
 ## Global Installation
 
 ```bash
-# 一鍵完成：編譯安裝 + 建立 ~/.ssh-roads/ 符號連結 + 建立 /usr/local/bin/roads 捷徑
+# One-shot: compile & install + create ~/.ssh-roads/ symlink + create /usr/local/bin/roads shortcut
 ./setup
 ```

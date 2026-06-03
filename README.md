@@ -21,12 +21,14 @@
 
 1. **Compile and Install**:
    Run the following command in the project root to install the executable to `~/.cargo/bin`:
+
    ```bash
    cargo install --path .
    ```
 
 2. **Automated Environment Configuration**:
    Run the following commands to create the directory and establish symbolic links for the configuration files:
+
    ```bash
    mkdir -p ~/.ssh-roads
    ln -s "$PWD/servers.json" ~/.ssh-roads/servers.json
@@ -40,6 +42,7 @@
    ```
 
 Alternatively, use the `setup` script within the project to complete all the above steps with one click:
+
 ```bash
 ./setup
 ```
@@ -51,6 +54,7 @@ The project prioritizes reading configurations from the executable's directory. 
 ### `servers.json` Format
 
 The fields have been significantly simplified; only mandatory fields need to be present:
+
 ```json
 {
   "servers": [
@@ -88,6 +92,7 @@ The fields have been significantly simplified; only mandatory fields need to be 
   ]
 }
 ```
+
 - **Variable Support**: All fields support the `$VARIABLE` format; the program automatically reads corresponding values from `.env`.
 - **Automatic Brackets**: The `comment` field does not require manual brackets; the program will automatically add `()` when displaying the menu.
 - **Flexible Fields**:
@@ -101,6 +106,7 @@ The fields have been significantly simplified; only mandatory fields need to be 
 ### 1. Interactive Mode
 
 Execute the program directly to see the server list with a neatly aligned interface, then enter the `key` to connect:
+
 ```bash
 roads
 ```
@@ -108,6 +114,7 @@ roads
 ### 2. Quick Connection
 
 If you already know the server's `key`, you can pass it as an argument to skip the menu:
+
 ```bash
 roads A
 ```

@@ -3,75 +3,76 @@
 ## Build & Run
 
 ```bash
-# 開發建置
+# Development build
 cargo build
 
-# 正式發布建置
+# Release build
 cargo build --release
 
-# 安裝到 ~/.cargo/bin
+# Install to ~/.cargo/bin
 cargo install --path .
 
-# 執行（開發中）
+# Run directly (during development)
 cargo run
 cargo run -- <SERVER_KEY>
 
-# 一鍵安裝 + 建立符號連結 + 建立 /usr/local/bin/roads 捷徑
+# One-shot: compile & install + create ~/.ssh-roads/ symlink + create /usr/local/bin/roads shortcut
 ./setup
 ```
 
-此專案無自動化測試套件。
+This project has no automated test suite.
 
 ## Architecture
 
-程式入口 `main.rs` 的啟動流程：
+Entry point is `main.rs`, with the following startup flow:
 
-1. `Config::get_env_path()` 定位 `.env`（優先 `~/.ssh-roads/.env`，其次 cwd 為 `.ssh-roads/` 時的本機路徑）並載入環境變數
-2. `Config::load()` 讀取 `servers.json`（優先 `~/.ssh-roads/servers.json`，其次 cwd）
-3. `ServerManager::show_menu()` 顯示對齊排版的伺服器清單
-4. 從 CLI 引數或 stdin 取得 server key
-5. `ServerManager::connect_server()` 依 `conn_type` 分派至對應連線方法
+1. `Config::get_env_path()` locates the `.env` file (prefers `~/.ssh-roads/.env`; falls back to the local path when cwd is `.ssh-roads/`) and loads environment variables
+2. `Config::load()` reads `servers.json` (prefers `~/.ssh-roads/servers.json`, then cwd)
+3. `ServerManager::show_menu()` displays the aligned server list
+4. Server key is obtained from CLI arguments or stdin
+5. `ServerManager::connect_server()` dispatches to the corresponding connection method based on `conn_type`
 
-### 模組職責
+### Module Responsibilities
 
-| 模組        | 職責                                                                                        |
-| ----------- | ------------------------------------------------------------------------------------------- |
-| `config.rs` | `ServerConfig`（單一伺服器設定）與 `Config`（清單），含 `$VAR` 環境變數解析及設定檔路徑查找 |
-| `server.rs` | `ServerManager`：選單顯示（Unicode 全形字元寬度對齊）與三種連線實作                         |
-| `cli.rs`    | stdin 讀取輸入                                                                              |
-| `main.rs`   | 組合上述流程，使用 Clap 解析可選的 `route` 引數                                             |
+| Module      | Responsibility                                                                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `config.rs` | `ServerConfig` (single server config) and `Config` (server list), including `$VAR` environment variable resolution and config file path lookup |
+| `server.rs` | `ServerManager`: menu display (Unicode full-width character alignment) and three connection implementations                                    |
+| `cli.rs`    | Reads input from stdin                                                                                                                         |
+| `main.rs`   | Composes the above flow; uses Clap to parse the optional `route` argument                                                                      |
 
-### 連線類型（`conn_type`）
+### Connection Types (`conn_type`)
 
-- `password`：透過系統 `expect` 指令自動填入密碼；`expect` 不存在時回退至互動式 `ssh`
-- `key`：`ssh -i <ssh_key>` 私鑰認證，固定帶 `IdentitiesOnly=yes`
-- `gcp`：調用 `gcloud compute ssh`
+- `password`: Uses the system `expect` command to fill in the password automatically; falls back to interactive `ssh` if `expect` is not available
+- `key`: `ssh -i <ssh_key>` private key authentication with `IdentitiesOnly=yes`
+- `gcp`: Invokes `gcloud compute ssh`
 
 ## Key Conventions
 
-### 環境變數展開
+### Environment Variable Expansion
 
-`servers.json` 所有字串欄位均支援 `$VAR_NAME` 格式。展開邏輯在 `ServerConfig::resolve()`，若變數不存在會印出警告並保留原始字串。
+All string fields in `servers.json` support the `$VAR_NAME` format.
+Expansion logic lives in `ServerConfig::resolve()`: if a variable is not found, a warning is printed and the original string is kept.
 
-### 設定檔可選欄位
+### Optional Config Fields
 
-- `port` 為 `22` 或省略時，選單不顯示埠號
-- GCP 類型：可省略 `pswd`；`key` 類型：必須有 `ssh_key`
-- 非 GCP 伺服器可省略所有 `gcp_*` 欄位（以 `#[serde(default)]` 標記）
+- When `port` is `22` or omitted, the port is not shown in the menu
+- GCP type: `pswd` may be omitted; `key` type: `ssh_key` is required
+- Non-GCP servers may omit all `gcp_*` fields (marked with `#[serde(default)]`)
 
-### Unicode 對齊
+### Unicode Alignment
 
-選單使用 `unicode-width` crate 的 `UnicodeWidthStr::width()` 計算顯示寬度（全形字元 = 2），再補空白對齊，勿改用 Rust 內建的 `len()`。
+The menu uses `UnicodeWidthStr::width()` from the `unicode-width` crate to measure display width (full-width characters = 2) and pads with spaces accordingly.
+Do not use Rust's built-in `len()` for this purpose.
 
-### `password` 連線的 expect 腳本
+### `password` Connection — expect Script
 
-密碼透過環境變數（`SSH_HOST`、`SSH_USER`、`SSH_PSWD`、`SSH_PORT`）傳入 expect 腳本，避免密碼出現在 argv 中。
+The password is passed into the expect script via environment variables (`SSH_HOST`, `SSH_USER`, `SSH_PSWD`, `SSH_PORT`) to avoid exposing it in the process argument list.
 
-## Git Commit 規範
+## Git Commit Guidelines
 
-詳見 `.github/git-commit-instructions.md`，摘要如下：
+See `.github/git-commit-instructions.md` for details. Summary:
 
-- 一律使用繁體中文（台灣），採台灣標準翻譯與慣用術語
-- 遵循 [Conventional Commits](https://www.conventionalcommits.org/zh-hant/) 格式
-- 變動複雜時，標題外須有至少一項 bullet point 說明各檔案異動原因
-- Commit message **不加** `Co-Authored-By` 署名
+- Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format
+- For complex changes, include at least one bullet point below the subject line explaining the reason for each file changed
+- Do **not** add a `Co-Authored-By` trailer
